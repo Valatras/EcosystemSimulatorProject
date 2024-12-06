@@ -69,26 +69,20 @@ public partial class MainWindowViewModel : GameBase
 
     protected override void Tick()
     {
-        carnivores.Tick();
-
-        // Randomize the Carnivores.Velocity value after each carnivores.Tick()
-
-        if (carnivores.Location.X >= Width - 32 || carnivores.Location.X <= 0)
+        for (int i = GameObjects.Count - 1; i >= 0; i--)
         {
-            carnivores.Velocity = new Point(-carnivores.Velocity.X, carnivores.Velocity.Y);
+            var gameObject = GameObjects[i];
+            gameObject.Tick();
+            if (gameObject.Life <= 0)
+            {
+                GameObjects.RemoveAt(i); // Remove object if life is 0
+            }
+            else if (CurrentTick % 1000 == 0)
+            {
+                gameObject.Velocity = new Point(gameObject.Velocity.Y, gameObject.Velocity.X);
+                // Switch the values between the first and second values of carnivores.Velocity after 1000 ticks
+            }
         }
-        else if (carnivores.Location.Y >= Height - 32 || carnivores.Location.Y <= 0)
-        {
-            carnivores.Velocity = new Point(carnivores.Velocity.X, -carnivores.Velocity.Y);
-        }
-
-        // Switch the values between the first and second values of carnivores.Velocity after 1000 ticks
-        if (CurrentTick % 1000 == 0)
-        {
-            carnivores.Velocity = new Point(carnivores.Velocity.Y, carnivores.Velocity.X);
-            Timer++;
-        }
-
     }
 
 
