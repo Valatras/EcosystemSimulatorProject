@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace EcosystemSimulatorProject.Views
 {
@@ -8,5 +9,7 @@ namespace EcosystemSimulatorProject.Views
         {
             InitializeComponent();
         }
+
+
     }
 }
