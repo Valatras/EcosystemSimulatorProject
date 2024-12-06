@@ -4,9 +4,9 @@ using System;
 
 namespace EcosystemSimulatorProject.ViewModels;
 
-public partial class Carnivores : GameObject
+public partial class Herbivores : GameObject
 {
-    // Randomize the Carnivores.Velocity value after each carnivores.Tick()
+    // Randomize the Herbivores.Velocity value after each herbivores.Tick()
 
     Random random = new Random();
     double XSpeed;
@@ -22,7 +22,7 @@ public partial class Carnivores : GameObject
     public double width => 50;
     public double height => 70;
 
-    public Carnivores(Point location) : base(location)
+    public Herbivores(Point location) : base(location)
     {
         XSpeed = random.NextDouble() * 2 - 1; // Value between -1 and 1
         YSpeed = random.NextDouble() * 2 - 1; // Value between -1 and 1

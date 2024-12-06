@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		WindowState="Maximized"
+        WindowState="Maximized"
         x:Class="EcosystemSimulatorProject.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -18,11 +18,41 @@
     
     <Grid>
         <Image Source="/Assets/Map.jpg" Stretch="Fill"/>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Content="Start" Command="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Content="Stop" Command="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Text="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Create carnivore" Command="{Binding AddCarnivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Button Content="Create herbivore" Command="{Binding AddHerbivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Button Content="Create Plant" Command="{Binding AddPlant}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
+
+        <ItemsControl
+        ItemsSource="{Binding GameObjects}"
+        Width="{Binding Width, Mode=OneWay}"
+        Height="{Binding Height, Mode=OneWay}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="{x:Type vm:Carnivores}">
+                    <Image Width="120" Height="150"
+                        Source="/Assets/valstrax_carn.png" />
+                </DataTemplate>
+				<DataTemplate DataType="{x:Type vm:Herbivores}">
+	                <Image Width="120" Height="150"
+		                Source="/Assets/aptonoth_herb.png" />
+                </DataTemplate>
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
     </Grid>
     
+    <Window.Styles>
+        <Style Selector="ItemsControl > ContentPresenter" x:DataType="vm:GameObject">
+            <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+            <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
+        </Style>
+    </Window.Styles>
 </Window>
