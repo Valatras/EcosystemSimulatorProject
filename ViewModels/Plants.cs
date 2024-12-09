@@ -10,6 +10,8 @@ public partial class Plants : GameObject
     public double height;
     public Plants(Point location) : base(location)
     {
+        energy = 100; // Initial energy value
+        life = 100;   // Initial life value
     }
 
     private Point _velocity;

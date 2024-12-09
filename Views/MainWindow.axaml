@@ -10,62 +10,62 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="EcosystemSimulatorProject">
 
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainWindowViewModel/>
-	</Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
 
-	<Grid>
-		<Image Source="/Assets/Map.jpg" Stretch="Fill"/>
-		<StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
-			<TextBlock Text="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<Button Content="Create carnivore" Command="{Binding AddCarnivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<Button Content="Create herbivore" Command="{Binding AddHerbivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<Button Content="Create Plant" Command="{Binding AddPlant}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-		</StackPanel>
+    <Grid>
+        <Image x:Name="MapImage" Source="/Assets/Map.jpg" Stretch="Fill"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="300 4">
+            <TextBlock Text="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Create carnivore" Command="{Binding AddCarnivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Create herbivore" Command="{Binding AddHerbivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Create Plant" Command="{Binding AddPlant}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
 
-		<ItemsControl
-        ItemsSource="{Binding GameObjects}"
-        Width="{Binding Width, Mode=OneWay}"
-        Height="{Binding Height, Mode=OneWay}">
+        <ItemsControl
+            ItemsSource="{Binding GameObjects}"
+            Width="{Binding Width, ElementName=MapImage}"
+            Height="{Binding Height, ElementName=MapImage}">
 
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Width="{Binding Width, ElementName=MapImage}" Height="{Binding Height, ElementName=MapImage}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-			<ItemsControl.DataTemplates>
-				<DataTemplate DataType="{x:Type vm:Carnivores}">
-					<StackPanel>
-						<Image Width="120" Height="150" Source="/Assets/valstrax_carn.png" />
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="10" Foreground="Red"/>
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="10" Foreground="Green"/>
-					</StackPanel>
-				</DataTemplate>
-				<DataTemplate DataType="{x:Type vm:Herbivores}">
-					<StackPanel>
-						<Image Width="120" Height="150" Source="/Assets/aptonoth_herb.png" />
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="10" Foreground="Red"/>
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="10" Foreground="Green"/>
-					</StackPanel>
-				</DataTemplate>
-				<DataTemplate DataType="{x:Type vm:Plants}">
-					<StackPanel>
-						<Image Width="120" Height="150" Source="/Assets/plant.jpg" />
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="10" Foreground="Red"/>
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="10" Foreground="Green"/>
-					</StackPanel>
-				</DataTemplate>
-			</ItemsControl.DataTemplates>
-		</ItemsControl>
-	</Grid>
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="{x:Type vm:Carnivores}">
+                    <StackPanel>
+                        <Image Width="120" Height="150" Source="/Assets/valstrax_carn.png" />
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:Herbivores}">
+                    <StackPanel>
+                        <Image Width="120" Height="150" Source="/Assets/aptonoth_herb.png" />
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:Plants}">
+                    <StackPanel>
+                        <Image Width="120" Height="150" Source="/Assets/plant.png" />
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
+    </Grid>
 
-	<Window.Styles>
-		<Style Selector="ItemsControl > ContentPresenter" x:DataType="vm:GameObject">
-			<Setter Property="Canvas.Left" Value="{Binding Location.X}" />
-			<Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
-		</Style>
-	</Window.Styles>
+    <Window.Styles>
+        <Style Selector="ItemsControl > ContentPresenter" x:DataType="vm:GameObject">
+            <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+            <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
+        </Style>
+    </Window.Styles>
 </Window>
