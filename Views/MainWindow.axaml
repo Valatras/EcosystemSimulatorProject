@@ -3,12 +3,14 @@
         xmlns:vm="using:EcosystemSimulatorProject.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         WindowState="Maximized"
         x:Class="EcosystemSimulatorProject.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="EcosystemSimulatorProject">
+        Title="EcosystemSimulatorProject"
+        Width="{Binding WindowWidth, Mode=TwoWay}"
+        Height="{Binding WindowHeight, Mode=TwoWay}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -18,7 +20,7 @@
 
     <Grid>
         <Image x:Name="MapImage" Source="/Assets/Map.jpg" Stretch="Fill"/>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="300 4">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
             <TextBlock Text="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Button Content="Create carnivore" Command="{Binding AddCarnivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Button Content="Create herbivore" Command="{Binding AddHerbivore}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -46,7 +48,7 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:Herbivores}">
                     <StackPanel>
-                        <Image Width="120" Height="150" Source="/Assets/aptonoth_herb.png" />
+                        <Image Width="100" Height="150" Source="/Assets/aptonoth_herb.png" />
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
@@ -58,6 +60,13 @@
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
                 </DataTemplate>
+				<DataTemplate DataType="{x:Type vm:OrganicWaste}">
+					<StackPanel>
+						<Image Width="120" Height="150" Source="/Assets/organicWaste.png" />
+						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
+						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+					</StackPanel>
+				</DataTemplate>
             </ItemsControl.DataTemplates>
         </ItemsControl>
     </Grid>

@@ -28,8 +28,8 @@ public partial class Carnivores : Animals
     public override void Tick()
     {
         base.Tick();
-        
+        // I can add more time based logic than just the base.Tick() method from the Animals class.
     }
 
-    
+
 }

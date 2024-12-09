@@ -15,110 +15,42 @@ public partial class MainWindowViewModel : GameBase
     public ICommand AddHerbivore { get; }
     public ICommand AddPlant { get; }
 
-    //fields
+    // Fields
     public int Timer { get; set; }
-    public int Width { get; } = 800;
-    public int Height { get; } = 450;
 
-    // Liste des objets à afficher
+    private double _windowWidth;
+    private double _windowHeight;
+
+    public double WindowWidth
+    {
+        get => _windowWidth;
+        set => SetProperty(ref _windowWidth, value);
+    }
+
+    public double WindowHeight
+    {
+        get => _windowHeight;
+        set => SetProperty(ref _windowHeight, value);
+    }
+
+    // List of objects to display
     public ObservableCollection<GameObject> GameObjects { get; } = new();
+
+    private readonly GameObjectFactory _gameObjectFactory;
+    private readonly GameTickHandler _gameTickHandler;
 
     public MainWindowViewModel()
     {
-        AddCarnivore = new RelayCommand(NewCarnivore);
-        AddHerbivore = new RelayCommand(NewHerbivore);
-        AddPlant = new RelayCommand(NewPlant);
-    }
+        _gameObjectFactory = new GameObjectFactory(this);
+        _gameTickHandler = new GameTickHandler(this);
 
-    private void NewCarnivore()
-    {
-        var carnivore = new Carnivores(new Point(Width / 2, Height / 2 ));
-        GameObjects.Add(carnivore);
+        AddCarnivore = new RelayCommand(_gameObjectFactory.NewCarnivore);
+        AddHerbivore = new RelayCommand(_gameObjectFactory.NewHerbivore);
+        AddPlant = new RelayCommand(_gameObjectFactory.NewPlant);
     }
-
-    private void NewHerbivore()
-    {
-        var herbivore = new Herbivores(new Point(Width / 2 , Height / 2 ));
-        GameObjects.Add(herbivore);
-    }
-
-    private void NewPlant()
-    {
-        var plant = new Plants(new Point(Width / 2 - 32, Height / 2 - 32));
-        GameObjects.Add(plant);
-    }
-
-    private Plants? FindNearestPlant(Herbivores herbivore, List<Plants> plants)
-    {
-        return plants
-            .Where(plant => herbivore.DistanceTo(plant.Location) <= herbivore.DetectionRange)
-            .OrderBy(plant => herbivore.DistanceTo(plant.Location))
-            .FirstOrDefault();
-    }
-
 
     protected override void Tick()
     {
-        // Separate lists for each type of GameObject
-        var herbivores = GameObjects.OfType<Herbivores>().ToList();
-        var carnivores = GameObjects.OfType<Carnivores>().ToList();
-        var plants = GameObjects.OfType<Plants>().ToList();
-
-        for (int i = GameObjects.Count - 1; i >= 0; i--)
-        {
-            var gameObject = GameObjects[i];
-
-            if (gameObject.Life <= 0)
-            {
-                GameObjects.Remove(gameObject); // Remove object if life is 0
-            }
-        }
-
-        // Update Herbivores
-        foreach (var herbivore in herbivores)
-        {
-            // Find the nearest plant for each herbivore
-            var nearestPlant = FindNearestPlant(herbivore, plants);
-
-            if (nearestPlant != null)
-            {
-                herbivore.MoveTowards(nearestPlant);
-
-                // Herbivore eats the plant if it's close enough
-                if (herbivore.IsAtLocation(nearestPlant.Location))
-                {
-                    herbivore.Eat(nearestPlant);
-                    if (nearestPlant.Life <= 0)
-                    {
-                        GameObjects.Remove(nearestPlant); // Remove plant if life is 0
-                    }
-                }
-            }
-
-            herbivore.Tick();
-        }
-    
-
-
-        // Update Carnivores
-        foreach (var carnivore in carnivores)
-        {
-            carnivore.Tick();
-        }
-
-        // Update Plants
-        foreach (var plant in plants)
-        {
-            plant.Tick();
-        }
-
-        // Additional logic for switching velocities every 1000 ticks
-        if (CurrentTick % 100 == 0)
-        {
-            foreach (var gameObject in GameObjects)
-            {
-                gameObject.Velocity = new Point(-gameObject.Velocity.X, -gameObject.Velocity.Y);
-            }
-        }
+        _gameTickHandler.HandleTick();
     }
 }

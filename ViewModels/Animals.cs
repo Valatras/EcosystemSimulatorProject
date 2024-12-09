@@ -14,7 +14,16 @@ namespace EcosystemSimulatorProject.ViewModels
         private const double MaxSpeed = 5.0;
         private const double MinSpeed = -5.0;
 
+
         private Point _velocity;
+
+        public event Action<OrganicWaste>? OnPoop; // Event to notify when an animal poops
+
+        public void OrganicWaste()
+        {
+            var organicWaste = new OrganicWaste(Location); // Create organicWaste at the animal's current location
+            OnPoop?.Invoke(organicWaste);         // Notify subscribers (e.g., MainWindowViewModel)
+        }
         public override Point Velocity
         {
             get => _velocity;
