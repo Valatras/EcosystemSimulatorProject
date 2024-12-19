@@ -34,7 +34,7 @@ public partial class MainWindowViewModel : GameBase
     }
 
     // List of objects to display
-    public ObservableCollection<GameObject> GameObjects { get; } = new();
+    public ObservableCollection<GameObject> GameObjects { get; } = [];
 
     private readonly GameObjectFactory _gameObjectFactory;
     private readonly GameTickHandler _gameTickHandler;

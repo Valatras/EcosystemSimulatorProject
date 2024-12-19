@@ -36,4 +36,9 @@ public class GameObjectFactory
         var organicWaste = new OrganicWaste(location);
         _viewModel.GameObjects.Add(organicWaste);
     }
+    public void NewMeat(Point location)
+    {
+        var meat = new Meat(location);
+        _viewModel.GameObjects.Add(meat);
+    }
 }

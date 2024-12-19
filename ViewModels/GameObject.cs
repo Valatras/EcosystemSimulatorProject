@@ -17,8 +17,6 @@ public abstract partial class GameObject : ViewModelBase
     [ObservableProperty]
     private Point _location;
 
-    public abstract Point Velocity { get; set; }
-
     protected GameObject(Point location)
     {
         Location = location;
@@ -26,7 +24,6 @@ public abstract partial class GameObject : ViewModelBase
 
     public virtual void Tick()
     {
-        Location = Location + Velocity;
         UpdateLifeAndEnergy();
     }
 

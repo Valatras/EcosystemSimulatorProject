@@ -1,19 +1,14 @@
 using System.Linq;
 using System.Collections.Generic;
+using Avalonia;
 
 namespace EcosystemSimulatorProject.ViewModels;
 
 // handles time effects in the simulation
-public class GameTickHandler
+public class GameTickHandler(MainWindowViewModel viewModel)
 {
-    private readonly MainWindowViewModel _viewModel;
-    private readonly GameObjectFactory _factory;
-
-    public GameTickHandler(MainWindowViewModel viewModel)
-    {
-        _viewModel = viewModel;
-        _factory = new GameObjectFactory(viewModel);
-    }
+    private readonly MainWindowViewModel _viewModel = viewModel;
+    private readonly GameObjectFactory _factory = new(viewModel);
 
     public void HandleTick()
     {
@@ -22,6 +17,7 @@ public class GameTickHandler
         var carnivores = _viewModel.GameObjects.OfType<Carnivores>().ToList();
         var plants = _viewModel.GameObjects.OfType<Plants>().ToList();
         var organicWastes = _viewModel.GameObjects.OfType<OrganicWaste>().ToList();
+        var meats = _viewModel.GameObjects.OfType<Meat>().ToList();
 
         for (int i = _viewModel.GameObjects.Count - 1; i >= 0; i--)
         {
@@ -32,6 +28,14 @@ public class GameTickHandler
                 if (gameObject is Plants plant)
                 {
                     _factory.NewOrganicWaste(plant.Location);
+                }
+                else if (gameObject is Meat meat)
+                {
+                    _factory.NewOrganicWaste(meat.Location);
+                }
+                else if (gameObject is Herbivores herbivore)
+                {
+                    _factory.NewMeat(herbivore.Location);
                 }
                 _viewModel.GameObjects.Remove(gameObject); // Remove object if life is 0
             }
@@ -53,6 +57,7 @@ public class GameTickHandler
                     herbivore.Eat(nearestPlant);
                     if (nearestPlant.Life <= 0)
                     {
+                        
                         _factory.NewOrganicWaste(nearestPlant.Location);
                         _viewModel.GameObjects.Remove(nearestPlant); // Remove plant if life is 0
                     }
@@ -65,6 +70,41 @@ public class GameTickHandler
         // Update Carnivores
         foreach (var carnivore in carnivores)
         {
+            
+            
+            // Find the nearest herbivore for each carnivore
+            var nearestHerbivore = FindNearestHerbivore(carnivore, herbivores);
+            var nearestMeat = FindNearestMeat(carnivore, meats);
+
+            if (nearestMeat != null)
+            {
+                carnivore.MoveTowards(nearestMeat);
+
+                // Carnivore eats the meat if it's close enough
+                if (carnivore.IsAtLocation(nearestMeat.Location))
+                {
+                    carnivore.Eat(nearestMeat);
+                    
+                    
+                    _viewModel.GameObjects.Remove(nearestMeat); // Remove meat if life is 0
+                    
+                }
+            } else if (nearestHerbivore != null) {
+                carnivore.MoveTowards(nearestHerbivore);
+
+                // Carnivore hunts the herbivore if it's close enough
+                if (carnivore.IsAtLocation(nearestHerbivore.Location))
+                {
+                    carnivore.Hunt(nearestHerbivore);
+                    if (nearestHerbivore.Life <= 0)
+                    {
+                        _factory.NewMeat(nearestHerbivore.Location);
+                        _viewModel.GameObjects.Remove(nearestHerbivore); // Remove herbivore if life is 0
+                    }
+                }
+            }
+
+                
             carnivore.Tick();
         }
 
@@ -80,21 +120,45 @@ public class GameTickHandler
             organicWaste.Tick();
         }
 
+        foreach (var meat in meats)
+        {
+            meat.Tick();
+        }
+
         // Additional logic for switching velocities every 1000 ticks
         if (_viewModel.CurrentTick % 100 == 0)
         {
-            foreach (var gameObject in _viewModel.GameObjects)
+            // Additional logic for switching velocities every 1000 ticks
+            if (_viewModel.CurrentTick % 100 == 0)
             {
-                gameObject.Velocity = new Avalonia.Point(-gameObject.Velocity.X, -gameObject.Velocity.Y);
+                foreach (var animal in herbivores.Concat<Animals>(carnivores)) // Concatenates the two lists of animals.
+                {
+                    animal.Velocity = new Avalonia.Point(-animal.Velocity.X, -animal.Velocity.Y);
+                }
             }
         }
     }
 
-    private Plants? FindNearestPlant(Herbivores herbivore, List<Plants> plants)
+    private static Plants? FindNearestPlant(Herbivores herbivore, List<Plants> plants)
     {
         return plants
-            .Where(plant => herbivore.DistanceTo(plant.Location) <= herbivore.DetectionRange)
+            .Where(plant => herbivore.DistanceTo(plant.Location) <= herbivore.DetectionRange) // the Where method is used to filter the plants within the detection range by checking the distance between each plant and the herbivore.
             .OrderBy(plant => herbivore.DistanceTo(plant.Location))
+            .FirstOrDefault();
+    }
+
+    private static Herbivores? FindNearestHerbivore(Carnivores carnivore, List<Herbivores> herbivores)
+    {
+        return herbivores
+            .Where(herbivore => carnivore.DistanceTo(herbivore.Location) <= carnivore.DetectionRange) // the Where method is used to filter the plants within the detection range by checking the distance between each plant and the herbivore.
+            .OrderBy(herbivore => carnivore.DistanceTo(herbivore.Location))
+            .FirstOrDefault();
+    }
+    private static Meat? FindNearestMeat(Carnivores carnivore, List<Meat> meats)
+    {
+        return meats
+            .Where(meat => carnivore.DistanceTo(meat.Location) <= carnivore.DetectionRange) // the Where method is used to filter the plants within the detection range by checking the distance between each plant and the herbivore.
+            .OrderBy(meat => carnivore.DistanceTo(meat.Location))
             .FirstOrDefault();
     }
 }

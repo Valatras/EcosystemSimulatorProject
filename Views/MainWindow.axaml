@@ -62,9 +62,12 @@
                 </DataTemplate>
 				<DataTemplate DataType="{x:Type vm:OrganicWaste}">
 					<StackPanel>
-						<Image Width="120" Height="150" Source="/Assets/organicWaste.png" />
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
-						<ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+						<Image Width="20" Height="150" Source="/Assets/organicWaste.png" />
+					</StackPanel>
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type vm:Meat}">
+					<StackPanel>
+						<Image Width="20" Height="150" Source="/Assets/meat.png" />
 					</StackPanel>
 				</DataTemplate>
             </ItemsControl.DataTemplates>

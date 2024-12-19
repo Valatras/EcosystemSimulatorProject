@@ -3,19 +3,12 @@ using Avalonia;
 
 namespace EcosystemSimulatorProject.ViewModels
 {
-    public abstract class Animals : GameObject // Changed from internal to public
+    public abstract class Animals(Point location) : Livings(location) // Changed from internal to public
     {
-        public Animals(Point location) : base(location)
-        {
+        private static readonly Random random = new();
 
-        }
+        public abstract Point Velocity { get; set; }
 
-        private static readonly Random random = new Random();
-        private const double MaxSpeed = 5.0;
-        private const double MinSpeed = -5.0;
-
-
-        private Point _velocity;
 
         public event Action<OrganicWaste>? OnPoop; // Event to notify when an animal poops
 
@@ -23,11 +16,6 @@ namespace EcosystemSimulatorProject.ViewModels
         {
             var organicWaste = new OrganicWaste(Location); // Create organicWaste at the animal's current location
             OnPoop?.Invoke(organicWaste);         // Notify subscribers (e.g., MainWindowViewModel)
-        }
-        public override Point Velocity
-        {
-            get => _velocity;
-            set => SetProperty(ref _velocity, value);
         }
 
         public override void Tick()
@@ -43,10 +31,29 @@ namespace EcosystemSimulatorProject.ViewModels
             double bonusY = random.NextDouble() - 0.5; // Value between -0.5 and 0.5
             double newX = Math.Clamp(Velocity.X + bonusX, -5, 5);
             double newY = Math.Clamp(Velocity.Y + bonusY, -5, 5);
-            if (this is Herbivores || this is Carnivores)
+
+            Velocity = new Point(newX, newY);
+            
+        }
+
+        public void MoveTowards(GameObject target)
+        {
+            var direction = new Point(target.Location.X - Location.X, target.Location.Y - Location.Y);
+            var length = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+            if (length > 0) // Prevent division by zero
             {
-                Velocity = new Point(newX, newY);
+                Velocity = new Point(direction.X / length, direction.Y / length);
             }
+        }
+
+        public bool IsAtLocation(Point location)
+        {
+            return Math.Abs(Location.X - location.X) < 1 && Math.Abs(Location.Y - location.Y) < 1;
+        }
+
+        public double DistanceTo(Point target)
+        {
+            return Math.Sqrt(Math.Pow(Location.X - target.X, 2) + Math.Pow(Location.Y - target.Y, 2));
         }
     }
     
