@@ -10,15 +10,17 @@ public partial class Herbivores : Animals
 {
     public double width;
     public double height;
-    
+    public string Gender => gender;
 
-    public double DetectionRange => detectionRange; // define the detection range for Herbivores as Animals' one since it hasa protected field.
+
 
     public Herbivores(Point location) : base(location)
     {
         energy = 100; // Initial energy value for GameObject
         life = 100;   // Initial life value
         detectionRange = 400; // Detection range for Herbivores
+        contactRange = 40; // Contact range for Herbivores
+
     }
 
     private Point _velocity;

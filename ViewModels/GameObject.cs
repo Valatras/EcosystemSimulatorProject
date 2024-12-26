@@ -32,7 +32,7 @@ public abstract partial class GameObject : ViewModelBase
     {
         if (Energy > 0)
         {
-            Energy -= 0.5; // Decrease energy
+            Energy -= 0.1; // Decrease energy
         }
         else if (Life > 0)
         {

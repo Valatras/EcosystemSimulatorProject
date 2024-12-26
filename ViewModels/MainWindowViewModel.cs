@@ -41,13 +41,14 @@ public partial class MainWindowViewModel : GameBase
     private readonly GameTickHandler _gameTickHandler;
 
     public MainWindowViewModel()
+
     {
         _gameObjectFactory = new GameObjectFactory(this);
         _gameTickHandler = new GameTickHandler(this);
 
-        AddCarnivore = new RelayCommand(_gameObjectFactory.NewCarnivore);
-        AddHerbivore = new RelayCommand(_gameObjectFactory.NewHerbivore);
-        AddPlant = new RelayCommand(_gameObjectFactory.NewPlant);
+        AddCarnivore = new RelayCommand(() => _gameObjectFactory.NewCarnivore(null));
+        AddHerbivore = new RelayCommand(() => _gameObjectFactory.NewHerbivore(null));
+        AddPlant = new RelayCommand(() => _gameObjectFactory.NewPlant(null));
     }
 
     protected override void Tick()

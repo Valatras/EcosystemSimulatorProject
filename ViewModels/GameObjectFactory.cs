@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 
 namespace EcosystemSimulatorProject.ViewModels;
 
@@ -13,23 +14,54 @@ public class GameObjectFactory
         _viewModel = viewModel;
     }
 
-    public void NewCarnivore()
+    public void NewCarnivore(Point? location)
     {
-        var carnivore = new Carnivores(new Point(_viewModel.WindowWidth / 2, _viewModel.WindowHeight / 2));
-        _viewModel.GameObjects.Add(carnivore);
+       
+        if (location == null)
+        {
+            var carnivore = new Carnivores(new Point(_viewModel.WindowWidth / 2, _viewModel.WindowHeight / 2));
+            _viewModel.GameObjects.Add(carnivore);
+        }
+        else if (location.HasValue)
+        {
+            var carnivore = new Carnivores(new Point(location.Value.X, location.Value.Y));
+            _viewModel.GameObjects.Add(carnivore);
+        }
     }
 
-    public void NewHerbivore()
+    public void NewHerbivore(Point? location)
     {
-        var herbivore = new Herbivores(new Point(_viewModel.WindowWidth / 2, _viewModel.WindowHeight / 2));
-        _viewModel.GameObjects.Add(herbivore);
+
+        if (location == null)
+        {
+            var herbivore = new Herbivores(new Point(_viewModel.WindowWidth / 2, _viewModel.WindowHeight / 2));
+            _viewModel.GameObjects.Add(herbivore);
+        }
+        else if (location.HasValue) { 
+            var herbivore = new Herbivores(new Point(location.Value.X, location.Value.Y));
+            _viewModel.GameObjects.Add(herbivore);
+        }
+        
+        
     }
 
-    public void NewPlant()
+    public void NewPlant(Point? location)
     {
-        var plant = new Plants(new Point(_viewModel.WindowWidth / 2 , _viewModel.WindowHeight / 2 ));
-        _viewModel.GameObjects.Add(plant);
+
+        if (location == null)
+        {
+            var plant = new Plants(new Point(_viewModel.WindowWidth / 2, _viewModel.WindowHeight / 2));
+            _viewModel.GameObjects.Add(plant);
+        }
+        else if (location.HasValue)
+        {
+            var plant = new Plants(new Point(location.Value.X, location.Value.Y));
+            _viewModel.GameObjects.Add(plant);
+        }
+
+
     }
+
 
     public void NewOrganicWaste(Point location)
     {

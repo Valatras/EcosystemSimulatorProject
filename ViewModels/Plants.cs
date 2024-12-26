@@ -7,22 +7,23 @@ namespace EcosystemSimulatorProject.ViewModels;
 public partial class Plants : Livings
 {
 
-    private double rootRange = 100; // Define the root range for Plants to eat OrganicWaste
 
-    public double RootRange => rootRange; // Getter for rootRange
+    public double RootRange => detectionRange; // Getter for rootRange (range for Plants to eat OrganicWaste)
+    public double ReproductionRange => contactRange; // Getter for reproductionRange (range for Plants to throw seeds)
+
+
 
     public Plants(Point location) : base(location)
     {
         energy = 100; // Initial energy value
         life = 100;   // Initial life value
+        detectionRange = 400; // Define the root range for Plants to eat OrganicWaste
+        contactRange = 600; // Define the contact range for Plants to be eaten by Herbivores
     }
 
-    void Eat(OrganicWaste organicWaste)
+    public void Eat()
     {
-        if (Energy < 20) // Use the generated property instead of the field => Energy instead of energy
-        {
-            Energy += 100; // Restore plant's energy
-        }
+        Energy = 100;
     }
 
 }

@@ -7,6 +7,12 @@ namespace EcosystemSimulatorProject.ViewModels
     {
         private static readonly Random random = new();
         protected double detectionRange; // Define a detection range
+        protected double contactRange;// Define a contact range
+
+        public double DetectionRange => detectionRange; // Getter for detectionRange
+        public double ContactRange => contactRange; // Getter for contactRange
+
+
 
         public override void Tick()
         {

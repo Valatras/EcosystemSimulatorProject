@@ -44,7 +44,10 @@
 						<!-- Stackpanel mettais chaque objet les uns au dessus des autres.-->						
 						<!-- La localisation se trouve au top-left. Essayer de centrer la localisation.-->
                         <Grid>
-                            <Ellipse
+							
+							
+							<!-- Ellipse pour le detection range-->
+                            <Ellipse 
                                 Width="{Binding DetectionRange}"
                                 Height="{Binding DetectionRange}"
                                 Fill="Transparent"
@@ -54,6 +57,17 @@
                                     <TranslateTransform X="-250" Y="-250"/>
                                 </Ellipse.RenderTransform>
                             </Ellipse>
+							<!--Rectangle pour le contact range-->
+							<Rectangle 
+								Width="{Binding ContactRange}" 
+								Height="{Binding ContactRange}" 
+								Fill="Transparent" 
+								Stroke="Black" 
+								StrokeThickness="2">
+								<Rectangle.RenderTransform>
+									<TranslateTransform X="-250" Y="-220"/>
+								</Rectangle.RenderTransform>
+							</Rectangle>
 							<StackPanel Canvas.Left="{Binding Location.X}" Canvas.Top="{Binding Location.Y}" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Image Width="120" Height="150" Source="/Assets/valstrax_carn.png" />
                                 <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
@@ -66,19 +80,70 @@
 				</DataTemplate>
 				
 				<DataTemplate DataType="{x:Type vm:Herbivores}">
+					<Grid>
+						
+					<Ellipse
+                                Width="{Binding DetectionRange}"
+                                Height="{Binding DetectionRange}"
+                                Fill="Transparent"
+                                Stroke="Red"
+                                StrokeThickness="2">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="0" Y="-100"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<!--Rectangle pour le contact range-->
+					<Rectangle
+						Width="{Binding ContactRange}"
+						Height="{Binding ContactRange}"
+						Fill="Transparent"
+						Stroke="Black"
+						StrokeThickness="2">
+						<Rectangle.RenderTransform>
+							<TranslateTransform X="0" Y="-100"/>
+						</Rectangle.RenderTransform>
+					</Rectangle>
                     <StackPanel>
                         <Image Width="100" Height="150" Source="/Assets/aptonoth_herb.png" />
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
+					</Grid>
                 </DataTemplate>
 				
                 <DataTemplate DataType="{x:Type vm:Plants}">
+					<Grid>
+						
+					<Ellipse
+                                Width="{Binding RootRange}"
+                                Height="{Binding RootRange}"
+                                Fill="Transparent"
+                                Stroke="Red"
+                                StrokeThickness="2">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="-200" Y="-200"/>
+						</Ellipse.RenderTransform>
+						</Ellipse>
+					<!--Rectangle pour le contact range-->
+					<Ellipse
+						Width="{Binding ReproductionRange}"
+						Height="{Binding ReproductionRange}"
+						Fill="Transparent"
+						Stroke="Green"
+						StrokeThickness="2">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="-200" Y="-200"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
                     <StackPanel>
+						<StackPanel.RenderTransform>
+							<TranslateTransform X="-200" Y="0"/>
+						</StackPanel.RenderTransform>
                         <Image Width="120" Height="150" Source="/Assets/plant.png" />
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
+					</Grid>
                 </DataTemplate>
 				
 				<DataTemplate DataType="{x:Type vm:OrganicWaste}">

@@ -8,14 +8,14 @@ public partial class Carnivores : Animals
 {
     public double width;
     public double height;
-    public double DetectionRange => detectionRange; // define the detection range for Herbivores as Animals' one since it hasa protected field.
-
+    public string Gender => gender;
 
     public Carnivores(Point location) : base(location)
     {
         energy = 100; // Initial energy value
         life = 100;   // Initial life value
         detectionRange = 500; // Detection range for Carnivores
+        contactRange = 40; // Contact range for Carnivores
     }
 
     private Point _velocity;
@@ -45,7 +45,7 @@ public partial class Carnivores : Animals
         }
     }
 
-    public void Eat(Meat meat)
+    public void Eat()
     {
         Console.WriteLine("Carnivore is eating meat");
         if (Energy < 100) // Use the generated property instead of the field => Energy instead of energy

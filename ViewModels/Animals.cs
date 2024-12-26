@@ -6,6 +6,7 @@ namespace EcosystemSimulatorProject.ViewModels
     public abstract class Animals(Point location) : Livings(location)
     {
         private static readonly Random random = new();
+        protected string gender = random.Next(2) == 0 ? "Male" : "Female"; // chances : 50% male, 50% female
 
         public abstract Point Velocity { get; set; }
 
