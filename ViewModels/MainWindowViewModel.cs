@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace EcosystemSimulatorProject.ViewModels;
 
+//this file is a bridge between the View and the Models' behaviors
 
 public partial class MainWindowViewModel : GameBase
 {

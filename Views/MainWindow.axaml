@@ -39,20 +39,40 @@
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.DataTemplates>
-                <DataTemplate DataType="{x:Type vm:Carnivores}">
-                    <StackPanel>
-                        <Image Width="120" Height="150" Source="/Assets/valstrax_carn.png" />
-                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
-                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
-                    </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:Herbivores}">
+				
+				<DataTemplate DataType="{x:Type vm:Carnivores}">
+						<!-- Stackpanel mettais chaque objet les uns au dessus des autres.-->						
+						<!-- La localisation se trouve au top-left. Essayer de centrer la localisation.-->
+                        <Grid>
+                            <Ellipse
+                                Width="{Binding DetectionRange}"
+                                Height="{Binding DetectionRange}"
+                                Fill="Transparent"
+                                Stroke="Red"
+                                StrokeThickness="2">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="-250" Y="-250"/>
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+							<StackPanel Canvas.Left="{Binding Location.X}" Canvas.Top="{Binding Location.Y}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Width="120" Height="150" Source="/Assets/valstrax_carn.png" />
+                                <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
+                                <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
+							<StackPanel.RenderTransform>
+								<TranslateTransform X="-250" Y="-220"/>
+								</StackPanel.RenderTransform>
+                            </StackPanel>
+                        </Grid>
+				</DataTemplate>
+				
+				<DataTemplate DataType="{x:Type vm:Herbivores}">
                     <StackPanel>
                         <Image Width="100" Height="150" Source="/Assets/aptonoth_herb.png" />
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Life}" Width="120" Height="5" Foreground="Red"/>
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
                 </DataTemplate>
+				
                 <DataTemplate DataType="{x:Type vm:Plants}">
                     <StackPanel>
                         <Image Width="120" Height="150" Source="/Assets/plant.png" />
@@ -60,16 +80,19 @@
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Energy}" Width="120" Height="5" Foreground="Green"/>
                     </StackPanel>
                 </DataTemplate>
+				
 				<DataTemplate DataType="{x:Type vm:OrganicWaste}">
 					<StackPanel>
 						<Image Width="20" Height="150" Source="/Assets/organicWaste.png" />
 					</StackPanel>
 				</DataTemplate>
+				
 				<DataTemplate DataType="{x:Type vm:Meat}">
 					<StackPanel>
 						<Image Width="20" Height="150" Source="/Assets/meat.png" />
 					</StackPanel>
 				</DataTemplate>
+				
             </ItemsControl.DataTemplates>
         </ItemsControl>
     </Grid>

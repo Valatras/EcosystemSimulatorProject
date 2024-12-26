@@ -27,7 +27,7 @@ public class GameObjectFactory
 
     public void NewPlant()
     {
-        var plant = new Plants(new Point(_viewModel.WindowWidth / 2 - 32, _viewModel.WindowHeight / 2 - 32));
+        var plant = new Plants(new Point(_viewModel.WindowWidth / 2 , _viewModel.WindowHeight / 2 ));
         _viewModel.GameObjects.Add(plant);
     }
 

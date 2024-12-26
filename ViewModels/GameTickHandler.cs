@@ -33,9 +33,9 @@ public class GameTickHandler(MainWindowViewModel viewModel)
                 {
                     _factory.NewOrganicWaste(meat.Location);
                 }
-                else if (gameObject is Herbivores herbivore)
+                else if (gameObject is Animals animal)
                 {
-                    _factory.NewMeat(herbivore.Location);
+                    _factory.NewMeat(animal.Location);
                 }
                 _viewModel.GameObjects.Remove(gameObject); // Remove object if life is 0
             }
@@ -125,18 +125,23 @@ public class GameTickHandler(MainWindowViewModel viewModel)
             meat.Tick();
         }
 
+       
         // Additional logic for switching velocities every 1000 ticks
         if (_viewModel.CurrentTick % 100 == 0)
         {
-            // Additional logic for switching velocities every 1000 ticks
-            if (_viewModel.CurrentTick % 100 == 0)
+            foreach (var animal in herbivores.Concat<Animals>(carnivores)) // Concatenates the two lists of animals.
             {
-                foreach (var animal in herbivores.Concat<Animals>(carnivores)) // Concatenates the two lists of animals.
-                {
-                    animal.Velocity = new Avalonia.Point(-animal.Velocity.X, -animal.Velocity.Y);
-                }
+                animal.Velocity = new Avalonia.Point(-animal.Velocity.X, -animal.Velocity.Y);
+            }
+        } 
+        if (_viewModel.CurrentTick % 200 == 0)
+        {
+            foreach (var animal in herbivores.Concat<Animals>(carnivores)) // Concatenates the two lists of animals.
+            {
+                _factory.NewOrganicWaste(animal.Location);
             }
         }
+        
     }
 
     private static Plants? FindNearestPlant(Herbivores herbivore, List<Plants> plants)
@@ -162,3 +167,6 @@ public class GameTickHandler(MainWindowViewModel viewModel)
             .FirstOrDefault();
     }
 }
+
+
+// MEAL TIME AS CURRENT TIME SO I CAN SAY TO POOP AFTER 5000 TICKS STARTING FROM MEAL TIME. 
