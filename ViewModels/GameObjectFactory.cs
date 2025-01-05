@@ -24,7 +24,7 @@ public class GameObjectFactory
         }
         else if (location.HasValue)
         {
-            var carnivore = new Carnivores(new Point(location.Value.X, location.Value.Y));
+            var carnivore = new Carnivores(new Point(location.Value.X +20 , location.Value.Y+20));
             _viewModel.GameObjects.Add(carnivore);
         }
     }
@@ -38,7 +38,7 @@ public class GameObjectFactory
             _viewModel.GameObjects.Add(herbivore);
         }
         else if (location.HasValue) { 
-            var herbivore = new Herbivores(new Point(location.Value.X, location.Value.Y));
+            var herbivore = new Herbivores(new Point(location.Value.X + 20, location.Value.Y + 20));
             _viewModel.GameObjects.Add(herbivore);
         }
         

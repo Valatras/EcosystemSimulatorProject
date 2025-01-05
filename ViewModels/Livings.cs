@@ -19,12 +19,12 @@ namespace EcosystemSimulatorProject.ViewModels
             base.Tick(); // Call the base Tick method to update life and energy
         }
 
-        public bool IsAtLocation(Point location)
+        public bool IsAtLocation(Point location) // Check if the object is at the same location as the target
         {
             return Math.Abs(Location.X - location.X) < 1 && Math.Abs(Location.Y - location.Y) < 1;
         }
 
-        public double DistanceTo(Point target)
+        public double DistanceTo(Point target) // calculate the distance between the object and the target
         {
             return Math.Sqrt(Math.Pow(Location.X - target.X, 2) + Math.Pow(Location.Y - target.Y, 2));
         }

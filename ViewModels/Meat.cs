@@ -4,8 +4,7 @@ namespace EcosystemSimulatorProject.ViewModels
 {
     public class Meat : GameObject
     {
-        public double width;
-        public double height;
+        
 
         public Meat(Point location) : base(location)
         {
@@ -18,8 +17,6 @@ namespace EcosystemSimulatorProject.ViewModels
             base.Tick(); // Call the base Tick method to update life and energy
                          //can add more code functionality here
         }
-
-        public Rect Bounds;
     }
 }
 

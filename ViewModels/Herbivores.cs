@@ -8,8 +8,7 @@ namespace EcosystemSimulatorProject.ViewModels;
 
 public partial class Herbivores : Animals
 {
-    public double width;
-    public double height;
+
     public string Gender => gender;
 
 
@@ -30,8 +29,6 @@ public partial class Herbivores : Animals
         set => SetProperty(ref _velocity, value);
     }
 
-    public Rect Bounds;
-
     public override void Tick()
     {
         if (Energy > 30 && Life < 100)
@@ -41,9 +38,9 @@ public partial class Herbivores : Animals
         base.Tick();
     }
 
-    public void Eat(Plants plant)
+    public void Eat()
     {
-        plant.Life -= 10; // Reduce plant's life
+        
         if (Energy < 100) // Use the generated property instead of the field => Energy instead of energy
         {
             Energy += 20; // Restore herbivore's energy

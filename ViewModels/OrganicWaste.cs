@@ -4,8 +4,7 @@ namespace EcosystemSimulatorProject.ViewModels
 {
     public class OrganicWaste : GameObject
     {
-        public double width;
-        public double height;
+     
         public OrganicWaste(Point location) : base(location)
         {
             Life = 100; // Set initial life
@@ -19,6 +18,5 @@ namespace EcosystemSimulatorProject.ViewModels
 
         }
 
-        public Rect Bounds;
     }
 }

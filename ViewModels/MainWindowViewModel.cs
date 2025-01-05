@@ -40,8 +40,8 @@ public partial class MainWindowViewModel : GameBase
     private readonly GameObjectFactory _gameObjectFactory;
     private readonly GameTickHandler _gameTickHandler;
 
+    // Add the commands to the buttons in the MainWindow.axaml file
     public MainWindowViewModel()
-
     {
         _gameObjectFactory = new GameObjectFactory(this);
         _gameTickHandler = new GameTickHandler(this);

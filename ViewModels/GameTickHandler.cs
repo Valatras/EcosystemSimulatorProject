@@ -55,12 +55,9 @@ public class GameTickHandler(MainWindowViewModel viewModel)
                 // Herbivore eats the plant if it's close enough
                 if (herbivore.IsAtLocation(nearestPlant.Location))
                 {
-                    herbivore.Eat(nearestPlant);
-                    if (nearestPlant.Life <= 0)
-                    {
-                        _factory.NewOrganicWaste(nearestPlant.Location);
-                        _viewModel.GameObjects.Remove(nearestPlant); // Remove plant if life is 0
-                    }
+                    herbivore.Eat();
+                    nearestPlant.Life -= 10; // Reduce plant's life
+
                 }
             }
 
@@ -73,7 +70,7 @@ public class GameTickHandler(MainWindowViewModel viewModel)
                     herbivore.MoveTowards(nearestMate);
 
                     // Herbivores reproduce if they are at the same location
-                    if (herbivore.IsAtLocation(nearestMate.Location + new Point(10,10)))
+                    if (herbivore.IsAtLocation(nearestMate.Location))
                     {
                         _factory.NewHerbivore(herbivore.Location); // Create a new herbivore at the same location
                         herbivore.Energy -= 20;
@@ -130,7 +127,7 @@ public class GameTickHandler(MainWindowViewModel viewModel)
                     // Carnivores reproduce if they are at the same location
                     if (carnivore.IsAtLocation(nearestMate.Location))
                     {
-                        _factory.NewCarnivore(carnivore.Location + new Point(10,10)); // Create a new carnivore at the same location
+                        _factory.NewCarnivore(carnivore.Location); // Create a new carnivore at the same location
                         carnivore.Energy -= 20;
                         nearestMate.Energy -= 20;
                     }
