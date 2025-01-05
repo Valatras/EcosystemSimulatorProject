@@ -22,13 +22,13 @@ Table des matières
 
 -------------
 1 Diagramme de classe
-<img src="./DiagrammeClasse.png" />
+<img src="./DiagrammeClasse.png"/>
 
 > FIGURE 1 – Diagramme de classe
 
 
 2 Diagramme de séquence 
-<img src="./DiagrammeSequence.png" style="width:6.69293in;height:7.44589in" />
+<img src="./DiagrammeSequence.png"/>
 
 > FIGURE 2 – Diagramme de séquence
 
