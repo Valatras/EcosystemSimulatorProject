@@ -28,6 +28,7 @@ Table des matières
 
 
 2 Diagramme de séquence 
+
 <img src="./DiagrammeSequence.png"/>
 
 > FIGURE 2 – Diagramme de séquence
@@ -60,7 +61,7 @@ une seule raison de changer. Cela signifie qu’une classe doit se
 concentrer sur une seule fonctionnalité ou responsabilité bien définie
 dans le système.
 
-L’avantagedeceprincipeestd’améliorerlacohésiondesclassesetderéduireleurcouplageavecd’autrescom-posants.
+L’avantage de ce principe est d’améliorer la cohésion des classes et de réduire leur couplage avec d’autres composants.
 Ainsi, les modifications apportées a une classe n’impactent pas
 inutilement d’autres parties du système.
 
@@ -71,12 +72,12 @@ Par exemple, une classe responsable de la gestion de l’état des objets
 de l’écosystème ne traite que des propriétés liées à la vie et l’énergie
 de ces objets.
 
-Chaqueclasseseconcentresuruneseuleresponsabilité,commelamiseàjourdelapositionoudel’étatinterne
+Chaque classe se concentre sur une seule responsabilité, comme la mise à jour de la position ou de l’état interne
 des objets, sans intervenir dans d’autres aspects comme l’affichage ou
 la gestion des interactions entre objets.
 
 En isolant les responsabilités de cette manière, nous assurons que les
-modifications apportées à une fonction-nalité précise n’affectent pas le
+modifications apportées à une fonctionnalité précise n’affectent pas le
 reste du système. Chaque classe est simple à comprendre, à tester et à
 maintenir.
 
@@ -105,7 +106,7 @@ régression.
 
 2.2. Application dans le projet
 
-Dansnotreprojet,lesclassesabstraitesjouentunrôlecrucialdanslerespectduprincipeOCP.Parexemple,une
+Dans notre projet, les classes abstraites jouent un rôle crucial dans le respect du principe OCP. Par exemple, une
 classe abstraite d’animaux permet de définir des comportements
 génériques tout en offrant la possibilité d’ajouter de nouveaux types
 d’animaux sans modifier le code existant.
@@ -115,22 +116,22 @@ des sous-classes dérivées, permettant ainsi d’ajouter des
 fonctionnalités sans toucher à la classe de base.
 
 
-Ce respect du principe d’ouverture/fermeture permet :
-
-— D’ajouter de nouvelles fonctionnalités sans régression sur le code
-existant. — De maintenir un code stable tout en le faisant évoluer
-facilement.
-
-— De favoriser la modularité et la réutilisation des composants.
-
-En respectant le principe d’ouverture/fermeture, nous avons obtenu les
-avantages suivants :
-
-— Une extensibilité accrue : il est facile d’ajouter de nouveaux types
-d’objets en créant simplement de nou-velles sous-classes.
-
-— Une réduction des risques de régression : les classes existantes
-restent inchangées, ce qui limite les effets de bord.
-
-— Un code plus modulaire et réutilisable.
+> Ce respect du principe d’ouverture/fermeture permet :
+>
+> — D’ajouter de nouvelles fonctionnalités sans régression sur le code
+> existant. — De maintenir un code stable tout en le faisant évoluer
+> facilement.
+>
+> — De favoriser la modularité et la réutilisation des composants.
+>
+> En respectant le principe d’ouverture/fermeture, nous avons obtenu les
+> avantages suivants :
+>
+> — Une extensibilité accrue : il est facile d’ajouter de nouveaux types
+> d’objets en créant simplement de nou-velles sous-classes.
+>
+> — Une réduction des risques de régression : les classes existantes
+> restent inchangées, ce qui limite les effets de bord.
+>
+> — Un code plus modulaire et réutilisable.
 
